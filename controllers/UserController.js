@@ -38,10 +38,7 @@ module.exports = {
 
     async store(req, res) {
         const userAlreadyExists = await User.find({ email: req.body.email });
-        if (userAlreadyExists.length != 0) {
-            return res.json({ register: "err_email" })
-        }
-        else if (req.body.email.length <= 1) {
+        if (userAlreadyExists.length != 0 || req.body.email.length <= 1) {
             return res.json({ register: "err_email" })
         }
         const user = await User.create({
