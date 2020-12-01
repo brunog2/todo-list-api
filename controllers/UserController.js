@@ -12,9 +12,10 @@ module.exports = {
         const { email } = req.body;
         const { password } = req.body;
         const validationUser = await User.find({ password: password, email: email });
-      
+        console.log("autenticação...")
         if (validationUser != 0) {
-            return res.json([{ auth: "true", id: validationUser[0]._id }]);
+            var response = { id: validationUser[0]._id, auth: "true" };
+            return res.json(response);
         }
         return res.json({ auth: "false" });
     },
