@@ -3,7 +3,8 @@ const Task = require('../models/Task');
 module.exports = {
     async index(req, res) {
         console.log('Listing tasks...');
-        const tasks = await Task.find({}).then(response => {
+        const { userId } = req.query;
+        const tasks = await Task.find({ userId: userId }).then(response => {
             return res.json(response);
         });
     },
@@ -18,10 +19,10 @@ module.exports = {
     },
 
     async delete(req, res) {
-        const { description } = req.body;
-        console.log('Deleting task with description: ', description);
+        const { taskId } = req.body;
+        console.log('Deleting task with id: ', taskId);
 
-        const result = await Task.deleteOne({ description: description }).then(response => {
+        await Task.deleteOne({ _id: taskId }).then(response => {
             return res.json({ message: "Task deleted with success!" })
         });
     },
@@ -32,6 +33,7 @@ module.exports = {
             return res.json({ message: "Task already exists!" })
         }
         const task = await Task.create({
+            userId: req.body.userId,
             description: req.body.description,
             priority: req.body.priority,
             done: req.body.done
