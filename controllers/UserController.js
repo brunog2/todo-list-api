@@ -12,12 +12,13 @@ module.exports = {
         const { email } = req.body;
         const { password } = req.body;
         const validationUser = await User.find({ password: password, email: email });
+      
         if (validationUser != 0) {
-            return res.json({ auth: "true" });
+            return res.json({ auth: "true", id: validationUser[0]._id });
         }
         return res.json({ auth: "false" });
     },
-    
+
     async findWithId(req, res) {
         const { id } = req.query;
         console.log("Searching for user with id " + id)
