@@ -19,6 +19,7 @@ module.exports = {
     },
 
     async delete(req, res) {
+        console.log(req.body)
         const { taskId } = req.body;
         console.log('Deleting task with id: ', taskId);
 
