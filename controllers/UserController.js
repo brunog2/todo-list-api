@@ -14,7 +14,7 @@ module.exports = {
         const validationUser = await User.find({ password: password, email: email });
       
         if (validationUser != 0) {
-            return res.json({ auth: "true", id: validationUser[0]._id });
+            return res.json([{ auth: "true", id: validationUser[0]._id }]);
         }
         return res.json({ auth: "false" });
     },
