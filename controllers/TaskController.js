@@ -10,10 +10,10 @@ module.exports = {
     },
 
     async search(req, res) {
-        const { keywords } = req.query;
+        const { keywords, userId } = req.query;        
         console.log('Searching for tasks with keywords: ', keywords);
 
-        const result = await Task.find({ description: { $regex: new RegExp(keywords, 'i') } }).then(response => {
+        const result = await Task.find({ userId: userId, description: { $regex: new RegExp(keywords, 'i') } }).then(response => {
             return res.json(response);
         });
     },
